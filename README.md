@@ -7,7 +7,7 @@ Adds **simple** settings to any Laravel application.
 
 Retrieving a setting:
 ```php
-\LaraPkg\Settings\Setting::
+\LaraPkg\Settings\Facades\Setting::get('setting_group.key')
 ```
 
 ### Installation

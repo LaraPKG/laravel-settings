@@ -26,3 +26,25 @@ if (!function_exists('setting')) {
         return $manager->get($setting, $group, $entityId);
     }
 }
+
+if (!function_exists('set_setting')) {
+    /**
+     * Helper to set a setting to new value(s)
+     *
+     * @param string $key
+     * @param mixed $value
+     * @param int|null $entityId
+     * @return mixed|null
+     */
+    function set_setting(string $key, $value, int $entityId = null)
+    {
+        [$group, $setting] = strpos($key, '.') !== false
+            ? explode('.', $key, 1)
+            : [null, $key];
+
+        /** @var Setting $manager */
+        $manager = app(Setting::class);
+
+        return $manager->set($setting, $value, $group, $entityId);
+    }
+}
