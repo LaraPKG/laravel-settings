@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSettingsTable extends Migration
+{
+    /**
+     * Run the migration
+     */
+    public function up(): void
+    {
+        Schema::create('settings', static function (Blueprint $table) {
+            $table->id();
+
+            // Setting name and description
+            $table->string('name');
+            $table->text('description');
+
+            // Setting group foreign key
+            $table->unsignedBigInteger('group_id')->nullable();
+
+            // The key to reference the setting by
+            $table->string('key');
+
+            // The setting type (from config)
+            $table->string('type');
+
+            $table->timestampsTz();
+        });
+    }
+
+    /**
+     * Reverse the migration
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('settings');
+    }
+}
