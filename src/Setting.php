@@ -53,8 +53,10 @@ class Setting
      */
     protected function getModel(string $key, string $group = null): ?SettingModel
     {
-        /** @var SettingModel|null $setting */
-        $setting = SettingModel::with('values')
+        $model = config('laravel-settings.model') ?: SettingModel::class;
+
+        /** @var SettingModel $setting */
+        $setting = $model::with('values')
             ->where('group_id', $group)
             ->where('key', $key)
             ->first();
