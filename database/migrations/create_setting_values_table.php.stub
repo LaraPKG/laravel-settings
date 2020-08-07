@@ -24,6 +24,11 @@ class CreateSettingValuesTable extends Migration
             $table->text('value');
 
             $table->index(['setting_id', 'entity_id']);
+
+            $table->foreign('setting_id')
+                ->references('id')
+                ->on('settings')
+                ->cascadeOnDelete();
         });
     }
 
