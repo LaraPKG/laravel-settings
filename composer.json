@@ -1,0 +1,67 @@
+{
+    "name": "larapkg/laravel-settings",
+    "description": "Settings for laravel stored in the Database",
+    "keywords": [
+        "larapkg",
+        "laravel",
+        "settings"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paul Dawson",
+            "email": "me@pauldawson.me",
+            "homepage": "https://www.pauldawson.me",
+            "role": "Developer"
+        },
+        {
+            "name": "Ron Appleton",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^9.0",
+        "psalm/plugin-laravel": "^1.2",
+        "vimeo/psalm": "^3.11",
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaraPkg\\Settings\\": "src"
+        },
+        "files": [
+            "helpers/setting.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaraPkg\\Settings\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaraPkg\\Settings\\SettingsServiceProvider"
+            ],
+            "aliases": {
+                "Setting": "Setting"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
