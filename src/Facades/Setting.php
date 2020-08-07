@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaraPkg\Settings;
+namespace LaraPkg\Settings\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Facade;
  * Setting Facade
  *
  * @package LaraPkg\Settings
- * @see Setting
+ * @see \LaraPkg\Settings\Setting
  *
  * @method static get(string $key, string $group = null, int $entityId = null)
  */
-class SettingFacade extends Facade
+class Setting extends Facade
 {
     /**
      * Gets the Facade Accessor
