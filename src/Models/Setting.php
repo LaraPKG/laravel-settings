@@ -148,9 +148,8 @@ class Setting extends Model
                 return (float)$values->first()->value;
             case 'double':
                 return (double)$values->first()->value;
-            case 'string':
-            default:
-                return (string)$values->first()->value;
         }
+
+        return (string)$values->first()->value;
     }
 }
