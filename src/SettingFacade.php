@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Facade;
  * Setting Facade
  *
  * @package LaraPkg\Settings
- * @mixin Setting
  * @see Setting
+ *
+ * @method static get(string $key, string $group = null, int $entityId = null)
  */
 class SettingFacade extends Facade
 {

@@ -20,7 +20,7 @@ class CreateSettingsTable extends Migration
 
             // Setting name and description
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
 
             // Setting group foreign key
             $table->unsignedBigInteger('group_id')->nullable();

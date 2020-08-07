@@ -18,6 +18,7 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Publish package assets
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [__DIR__ . '/../config/laravel-settings.php' => config_path('laravel-settings.php')],
