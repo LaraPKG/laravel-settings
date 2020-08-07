@@ -25,7 +25,7 @@ class SettingsServiceProvider extends ServiceProvider
                 'config'
             );
 
-            if (!class_exists('CreatePackageTable')) {
+            if (! class_exists('CreatePackageTable')) {
                 $this->publishes([
                     $this->migrationPath('create_setting_groups_table'),
                     $this->migrationPath('create_settings_table'),
