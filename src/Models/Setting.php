@@ -65,10 +65,51 @@ class Setting extends Model
      * @param int|null $entityId
      * @return mixed
      */
-    public function value(?int $entityId = null)
+    public function value(int $entityId = null)
     {
         return $this->castSettingValue(
             $this->values->where('entity_id', $entityId)
+        );
+    }
+
+    /**
+     * Sets the value of a setting to the provided data
+     *
+     * @param mixed $value
+     * @param int|null $entityId
+     * @return mixed
+     */
+    public function setValue($value, int $entityId = null)
+    {
+        $records = !$value instanceof \Illuminate\Support\Collection
+            ? collect($value)
+            : $value;
+
+        $values = $this->storeValues($records, $entityId);
+
+        return $this->castSettingValue(
+            $values->count() < 2 ? $values->first() : $values
+        );
+    }
+
+    /**
+     * Stores setting values
+     *
+     * @param \Illuminate\Support\Collection $values
+     * @param int|null $entityId
+     * @return Collection
+     */
+    protected function storeValues(\Illuminate\Support\Collection $values, int $entityId = null): Collection
+    {
+        $this->values()->delete();
+
+        return $this->values()->createMany(
+            $values->map(static function ($item) use ($entityId) {
+                return [
+                    'entity_id' => $entityId,
+                    'value' => $item,
+                ];
+            })
         );
     }
 
