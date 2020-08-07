@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @see \LaraPkg\Settings\Setting
  *
  * @method static get(string $key, string $group = null, int $entityId = null)
+ * @method static set(string $key, mixed $value, string $group = null, int $entityId = null)
  */
 class Setting extends Facade
 {
