@@ -81,7 +81,7 @@ class Setting extends Model
      */
     public function setValue($value, int $entityId = null)
     {
-        $records = !$value instanceof \Illuminate\Support\Collection
+        $records = ! $value instanceof \Illuminate\Support\Collection
             ? collect($value)
             : $value;
 
@@ -124,7 +124,7 @@ class Setting extends Model
         $cast = config("laravel-settings.casts.{$this->type}");
         $isArray = in_array($cast, ['array', 'json', 'collection']);
 
-        if (!$isArray && $values->isEmpty()) {
+        if (! $isArray && $values->isEmpty()) {
             return null;
         }
 
