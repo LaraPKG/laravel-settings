@@ -62,6 +62,7 @@ class Setting
      */
     protected function getModel(string $key, string $group = null): ?SettingModel
     {
+        /** @var SettingModel $model */
         $model = config('laravel-settings.model') ?: SettingModel::class;
 
         /** @var SettingModel $setting */
@@ -73,6 +74,12 @@ class Setting
         return $setting;
     }
 
+    /**
+     * Parses a setting group, key combination using dot notation
+     *
+     * @param string $search
+     * @return array
+     */
     protected function parseKey(string $search): array
     {
         return strpos($search, '.') !== false

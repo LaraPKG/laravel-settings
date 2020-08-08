@@ -103,14 +103,11 @@ class Setting extends Model
     {
         $this->values()->delete();
 
-        return $this->values()->createMany(
-            $values->map(static function ($item) use ($entityId) {
-                return [
-                    'entity_id' => $entityId,
-                    'value' => $item,
-                ];
-            })
-        );
+        $settings = $values->map(static function ($item) use ($entityId) {
+            return ['entity_id' => $entityId, 'value' => $item];
+        });
+
+        return $this->values()->createMany($settings->toArray());
     }
 
     /**
