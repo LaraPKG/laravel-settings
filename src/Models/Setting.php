@@ -31,7 +31,7 @@ class Setting extends Model
      *
      * @var string[]
      */
-    public $fillable = [
+    public array $fillable = [
         'name',
         'description',
         'group_id',

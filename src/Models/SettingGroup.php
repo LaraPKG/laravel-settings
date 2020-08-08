@@ -26,7 +26,7 @@ class SettingGroup extends Model
      *
      * @var string[]
      */
-    public $fillable = [
+    public array $fillable = [
         'name',
         'description',
     ];
