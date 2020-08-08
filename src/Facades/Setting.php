@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Facade;
  * @package LaraPkg\Settings
  * @see \LaraPkg\Settings\Setting
  *
- * @method static get(string $key, string $group = null, int $entityId = null)
- * @method static set(string $key, mixed $value, string $group = null, int $entityId = null)
+ * @method static get(string $key, int $entityId = null)
+ * @method static set(string $key, mixed $value, int $entityId = null)
  */
 class Setting extends Facade
 {

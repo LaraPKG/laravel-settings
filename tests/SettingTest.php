@@ -25,7 +25,7 @@ class SettingTest extends TestCase
         $setting->setValue('test');
 
         // Get the value using the Facade
-        $this->assertEquals('test', Setting::value('my_group.grouped_setting'));
+        $this->assertEquals('test', Setting::get('my_group.grouped_setting'));
     }
 
     /** @test */
@@ -34,7 +34,7 @@ class SettingTest extends TestCase
         $setting = $this->createSetting('test_setting', 'Ungrouped Setting', 'text');
 
         $setting->setValue('test');
-        $this->assertEquals('test', Setting::value('test_setting'));
+        $this->assertEquals('test', Setting::get('test_setting'));
     }
 
     /** @test */
@@ -44,10 +44,10 @@ class SettingTest extends TestCase
 
         // Non entity value
         $setting->setValue('test');
-        $this->assertEquals('test', Setting::value('test_setting'));
+        $this->assertEquals('test', Setting::get('test_setting'));
 
         // Entity value
         $setting->setValue('for_entity', 1);
-        $this->assertEquals('for_entity', Setting::value('test_setting', 1));
+        $this->assertEquals('for_entity', Setting::get('test_setting', 1));
     }
 }
