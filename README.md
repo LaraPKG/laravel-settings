@@ -11,7 +11,27 @@ Adds **simple** settings to any Laravel application.
 
 ### Usage
 
-#### Retrieving a setting
+#### Types
+
+Define setting types in `config/laravel-settings.php`, these are simply stored along with each setting.
+
+#### Casts
+
+Define type casts in the above config file, setting values will automatically be casted to their native types on retrieval!
+```php
+return [
+    // ...
+    'casts' => [
+        'boolean' => 'bool',
+        'select' => 'array',
+        'json' => 'json',
+        'number' => 'int',
+    ],
+    // ...
+];
+```
+
+#### Retrieving a setting value
 
 - Using the helper
 ```php
@@ -20,7 +40,14 @@ setting('setting_group.key');
 
 - Using the facade
 ```php
-\LaraPkg\Settings\Facades\Setting::get('key', 'setting_group');
+\LaraPkg\Settings\Facades\Setting::get('setting_group.key');
+```
+
+- With an Entity id
+An entity id allows you to store specific settings for that entity (such as a Domain or multi-tenant application)
+```php
+$entityId = 1;
+\LaraPkg\Settings\Facades\Setting::get('setting_group.key', $entityId);
 ```
 
 #### Setting a setting
@@ -33,11 +60,17 @@ set_setting('setting_group.key', 'Some value!');
 - Using the Facade
 ```php
 $value = 'something to store';
-\LaraPkg\Settings\Facades\Setting::set('key', $value, 'setting_group');
+$entityId = 1 ?? null;
+$groupName = 'setting_group' ?? null;
+\LaraPkg\Settings\Facades\Setting::set('key', $value, $groupName, $entityId);
 ```
 
 ### Installation
 
 ```shell script
 composer require larapkg/laravel-settings
+```
+
+```shell script
+php artisan vendor:publish --provider="LaraPkg\Settings\SettingsServiceProvider"
 ```
