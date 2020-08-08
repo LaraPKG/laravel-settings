@@ -8,7 +8,6 @@ namespace LaraPkg\Settings\Tests;
 
 use Illuminate\Foundation\Application;
 use LaraPkg\Settings\Models\Setting;
-use LaraPkg\Settings\Models\SettingGroup;
 use LaraPkg\Settings\SettingsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 

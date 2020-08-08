@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaraPkg\Settings;
 
-use Illuminate\Database\Eloquent\Builder;
 use LaraPkg\Settings\Models\Setting as SettingModel;
 use LaraPkg\Settings\Models\SettingGroup;
 
