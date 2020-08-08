@@ -61,7 +61,11 @@ class Setting
         /** @var SettingModel $setting */
         $setting = $model::with(['group', 'values']);
 
-        return $setting->forGroup($group)->where('key', $key)->first();
+        if ($group !== null) {
+            $setting->forGroup($group);
+        }
+
+        return $setting->where('key', $key)->first();
     }
 
     /**

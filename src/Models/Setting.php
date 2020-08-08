@@ -115,15 +115,11 @@ class Setting extends Model
      * Scopes a setting query by its group name
      *
      * @param Builder $query
-     * @param string|null $group
+     * @param string $group
      * @return Builder
      */
-    public function scopeForGroup(Builder $query, string $group = null): Builder
+    public function scopeForGroup(Builder $query, string $group): Builder
     {
-        if ($group === null) {
-            return $query;
-        }
-
         return $query->whereHas('group', static function (Builder $q) use ($group) {
             $q->where('name', $group);
         });
