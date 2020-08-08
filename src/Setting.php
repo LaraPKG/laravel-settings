@@ -8,6 +8,13 @@ use LaraPkg\Settings\Models\Setting as SettingModel;
 
 class Setting
 {
+    /**
+     * Gets a setting value by its group_name.setting_key
+     *
+     * @param string $search
+     * @param int|null $entityId
+     * @return mixed|null
+     */
     public function value(string $search, int $entityId = null)
     {
         [$key, $group] = $this->parseKey($search);
@@ -17,6 +24,7 @@ class Setting
             ? $model->value($entityId)
             : null;
     }
+
     /**
      * Gets a setting based on its key, group and entity
      *

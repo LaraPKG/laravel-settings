@@ -85,11 +85,7 @@ class Setting extends Model
             ? collect($value)
             : $value;
 
-        $values = $this->storeValues($records, $entityId);
-
-        return $this->castSettingValue(
-            $values->count() < 2 ? $values->first() : $values
-        );
+        return $this->castSettingValue($this->storeValues($records, $entityId));
     }
 
     /**
@@ -103,9 +99,12 @@ class Setting extends Model
     {
         $this->values()->delete();
 
-        $settings = $values->map(static function ($item) use ($entityId) {
-            return ['entity_id' => $entityId, 'value' => $item];
-        });
+        $settings = $values->map(
+            /** @psalm-suppress MissingClosureParamType */
+            static function ($item) use ($entityId) {
+                return ['entity_id' => $entityId, 'value' => $item];
+            }
+        );
 
         return $this->values()->createMany($settings->toArray());
     }
@@ -134,19 +133,20 @@ class Setting extends Model
             return $values->pluck('value')->toArray();
         }
 
+        $value = $values->first()->value ?? null;
+
         // Single value type
         switch ($cast) {
             case 'bool':
             case 'boolean':
-                return filter_var($values->first()->value, FILTER_VALIDATE_BOOLEAN);
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
             case 'int':
-                return (int)$values->first()->value;
-            case 'float':
-                return (float)$values->first()->value;
+                return (int)$value;
             case 'double':
-                return (double)$values->first()->value;
+            case 'float':
+                return (float)$value;
         }
 
-        return (string)$values->first()->value;
+        return (string)$value;
     }
 }
