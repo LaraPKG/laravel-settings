@@ -16,14 +16,10 @@ if (!function_exists('setting')) {
      */
     function setting(string $key, int $entityId = null)
     {
-        [$group, $setting] = strpos($key, '.') !== false
-            ? explode('.', $key, 2)
-            : [null, $key];
-
         /** @var Setting $manager */
         $manager = app(Setting::class);
 
-        return $manager->get($setting, $group, $entityId);
+        return $manager->value($key, $entityId);
     }
 }
 

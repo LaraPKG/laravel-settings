@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaraPkg\Settings\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Collection $values The setting values
+ * @method forGroup(string $group)
  */
 class Setting extends Model
 {
@@ -31,7 +33,7 @@ class Setting extends Model
      *
      * @var string[]
      */
-    public $fillable = [
+    public array $fillable = [
         'name',
         'description',
         'group_id',
@@ -107,6 +109,24 @@ class Setting extends Model
         );
 
         return $this->values()->createMany($settings->toArray());
+    }
+
+    /**
+     * Scopes a setting query by its group name
+     *
+     * @param Builder $query
+     * @param string|null $group
+     * @return Builder
+     */
+    public function scopeForGroup(Builder $query, string $group = null): Builder
+    {
+        if ($group === null) {
+            return $query;
+        }
+
+        return $query->whereHas('group', static function (Builder $q) use ($group) {
+            $q->where('name', $group);
+        });
     }
 
     /**

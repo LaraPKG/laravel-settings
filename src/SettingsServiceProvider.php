@@ -42,7 +42,7 @@ class SettingsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/laravel-settings.php', 'laravel-settings');
 
-        $this->app->singleton(Setting::class);
+        $this->app->singleton('setting', Setting::class);
     }
 
     /**

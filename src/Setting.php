@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace LaraPkg\Settings;
 
+use Illuminate\Database\Eloquent\Builder;
 use LaraPkg\Settings\Models\Setting as SettingModel;
+use LaraPkg\Settings\Models\SettingGroup;
 
 class Setting
 {
@@ -17,7 +19,8 @@ class Setting
      */
     public function value(string $search, int $entityId = null)
     {
-        [$key, $group] = $this->parseKey($search);
+        [$group, $key] = $this->parseKey($search);
+
         $model = $this->getModel($key, $group);
 
         return $model !== null
@@ -74,10 +77,34 @@ class Setting
         $model = config('laravel-settings.model') ?: SettingModel::class;
 
         /** @var SettingModel $setting */
-        $setting = $model::with('values')
-            ->where('group_id', $group)
-            ->where('key', $key)
-            ->first();
+        $setting = $model::with(['group', 'values']);
+
+        return $setting->forGroup($group)->where('key', $key)->first();
+    }
+
+    /**
+     * Creates a new setting for the given group
+     *
+     * @param string $key
+     * @param string|null $group
+     * @return SettingModel|null
+     */
+    protected function createModel(string $key, string $group = null): ?SettingModel
+    {
+        /** @var SettingModel $model */
+        $model = config('laravel-settings.model') ?: SettingModel::class;
+        $groupId = null;
+
+        if ($group !== null) {
+            $groupModel = SettingGroup::firstOrCreate(['name' => $group]);
+            $groupId = $groupModel !== null ? $groupModel->id : null;
+        }
+
+        /** @var SettingModel|null $setting */
+        $setting = $model::create([
+            'group_id' => $groupId,
+            'key' => $key,
+        ]);
 
         return $setting;
     }

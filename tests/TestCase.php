@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+/** @noinspection PhpIllegalPsrClassPathInspection */
+
 namespace LaraPkg\Settings\Tests;
 
 use Illuminate\Foundation\Application;
+use LaraPkg\Settings\Models\Setting;
+use LaraPkg\Settings\Models\SettingGroup;
 use LaraPkg\Settings\SettingsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -38,6 +42,8 @@ class TestCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
+
+        $this->runMigrations();
     }
 
     /**
@@ -51,5 +57,39 @@ class TestCase extends Orchestra
         return [
             SettingsServiceProvider::class,
         ];
+    }
+
+    /**
+     * Run migrations manually by including the stub files
+     */
+    protected function runMigrations(): void
+    {
+        require_once __DIR__ . '/../database/migrations/create_setting_groups_table.php.stub';
+        (new \CreateSettingGroupsTable())->up();
+
+        require_once __DIR__ . '/../database/migrations/create_settings_table.php.stub';
+        (new \CreateSettingsTable())->up();
+
+        require_once __DIR__ . '/../database/migrations/create_setting_values_table.php.stub';
+        (new \CreateSettingValuesTable())->up();
+    }
+
+    /**
+     * Gets data for creating a new setting via mass assignment
+     *
+     * @param string $key
+     * @param string $name
+     * @param string $type
+     * @param int|null $groupId
+     * @return Setting|null
+     */
+    protected function createSetting(string $key, string $name, string $type, int $groupId = null): ?Setting
+    {
+        return Setting::create([
+            'name' => $name,
+            'group_id' => $groupId,
+            'key' => $key,
+            'type' => $type,
+        ]);
     }
 }

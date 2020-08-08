@@ -22,11 +22,13 @@ class SettingValue extends Model
      *
      * @var string[]
      */
-    public $fillable = [
+    public array $fillable = [
         'setting_id',
         'entity_id',
         'value',
     ];
+
+    public $timestamps = false;
 
     /**
      * A setting value belongs to a setting

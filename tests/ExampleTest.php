@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+/** @noinspection PhpIllegalPsrClassPathInspection */
+
 namespace LaraPkg\Settings\Tests;
 
 class ExampleTest extends TestCase
