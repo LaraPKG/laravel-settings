@@ -55,7 +55,7 @@ class SettingsServiceProvider extends ServiceProvider
     protected function migrationPath(string $migration, $order = null): array
     {
         $key = __DIR__ . '/../database/migrations/' . $migration . '.php.stub';
-        $timestamp = implode('_', array_filter([date('Y_m_d_Hi'), $order]));
+        $timestamp = date('Y_m_d_Hi') . str_pad($order, 2, '0', STR_PAD_LEFT);
         $value = database_path('migrations/' . $timestamp . '_' . $migration . '.php');
 
         return [$key => $value];
