@@ -26,11 +26,11 @@ class SettingsServiceProvider extends ServiceProvider
             );
 
             if (! class_exists('CreatePackageTable')) {
-                $this->publishes([
+                $this->publishes(array_merge(
                     $this->migrationPath('create_setting_groups_table'),
                     $this->migrationPath('create_settings_table'),
-                    $this->migrationPath('create_setting_values_table'),
-                ]);
+                    $this->migrationPath('create_setting_values_table')
+                ), 'migrations');
             }
         }
     }
