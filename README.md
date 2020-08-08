@@ -1,6 +1,10 @@
 # LaraPKG
 ## Laravel Settings
 
+![PHPUnit](https://github.com/LaraPKG/laravel-settings/workflows/Tests/badge.svg)
+![Psalm](https://github.com/LaraPKG/laravel-settings/workflows/Psalm/badge.svg)
+![PHPCS](https://github.com/LaraPKG/laravel-settings/workflows/PHP%20CS%20Fixer/badge.svg)
+
 Adds **simple** settings to any Laravel application.
 
 ### Usage
