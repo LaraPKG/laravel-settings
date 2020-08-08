@@ -8,6 +8,15 @@ use LaraPkg\Settings\Models\Setting as SettingModel;
 
 class Setting
 {
+    public function value(string $search, int $entityId = null)
+    {
+        [$key, $group] = $this->parseKey($search);
+        $model = $this->getModel($key, $group);
+
+        return $model !== null
+            ? $model->value($entityId)
+            : null;
+    }
     /**
      * Gets a setting based on its key, group and entity
      *
@@ -62,5 +71,12 @@ class Setting
             ->first();
 
         return $setting;
+    }
+
+    protected function parseKey(string $search): array
+    {
+        return strpos($search, '.') !== false
+            ? explode('.', $search, 2)
+            : [null, $search];
     }
 }

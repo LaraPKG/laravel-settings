@@ -17,7 +17,7 @@ if (!function_exists('setting')) {
     function setting(string $key, int $entityId = null)
     {
         [$group, $setting] = strpos($key, '.') !== false
-            ? explode('.', $key, 1)
+            ? explode('.', $key, 2)
             : [null, $key];
 
         /** @var Setting $manager */
@@ -39,7 +39,7 @@ if (!function_exists('set_setting')) {
     function set_setting(string $key, $value, int $entityId = null)
     {
         [$group, $setting] = strpos($key, '.') !== false
-            ? explode('.', $key, 1)
+            ? explode('.', $key, 2)
             : [null, $key];
 
         /** @var Setting $manager */
