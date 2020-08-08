@@ -22,7 +22,7 @@ class SettingValue extends Model
      *
      * @var string[]
      */
-    public array $fillable = [
+    public $fillable = [
         'setting_id',
         'entity_id',
         'value',
