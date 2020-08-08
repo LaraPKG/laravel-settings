@@ -49,12 +49,14 @@ class SettingsServiceProvider extends ServiceProvider
      * Gets a database migration path to publish
      *
      * @param string $migration
+     * @param null $order
      * @return array
      */
-    protected function migrationPath(string $migration): array
+    protected function migrationPath(string $migration, $order = null): array
     {
         $key = __DIR__ . '/../database/migrations/' . $migration . '.php.stub';
-        $value = database_path('migrations/' . date('Y_m_d_His') . '_' . $migration . '.php');
+        $timestamp = implode('_', array_filter([date('Y_m_d_Hi'), $order]));
+        $value = database_path('migrations/' . $timestamp . '_' . $migration . '.php');
 
         return [$key => $value];
     }
