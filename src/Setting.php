@@ -98,7 +98,7 @@ class Setting
     protected function getGroup(string $group = null): Builder
     {
         /** @var SettingModel $model */
-        $model = config('laravel-settings.model') ?: SettingModel::class;
+        $model = config('laravel-settings.model') ?? SettingModel::class;
 
         /** @var Builder $setting */
         $settings = $model::with(['group', 'values']);
@@ -107,7 +107,7 @@ class Setting
             $settings->forGroup($group);
         }
 
-        return $setting;
+        return $settings;
     }
 
     /**
