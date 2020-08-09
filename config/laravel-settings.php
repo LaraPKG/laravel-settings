@@ -26,7 +26,17 @@ return [
     ],
 
     /**
-     * The model to use
+     * The model to use for the settings table
      */
     'model' => \LaraPkg\Settings\Models\Setting::class,
+
+    /**
+     * The model to use for the setting groups table
+     */
+    'group_model' => \LaraPkg\Settings\Models\SettingGroup::class,
+
+    /**
+     * The model to use for the setting values table
+     */
+    'value_model' => \LaraPkg\Settings\Models\SettingValue::class,
 ];

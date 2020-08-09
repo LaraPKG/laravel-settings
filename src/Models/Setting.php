@@ -48,7 +48,10 @@ class Setting extends Model
      */
     public function group(): BelongsTo
     {
-        return $this->belongsTo(SettingGroup::class);
+        /** @var string|null $model */
+        $model = config('laravel-settings.group_model');
+
+        return $this->belongsTo($model ?? SettingGroup::class);
     }
 
     /**
@@ -58,7 +61,10 @@ class Setting extends Model
      */
     public function values(): HasMany
     {
-        return $this->hasMany(SettingValue::class);
+        /** @var string|null $model */
+        $model = config('laravel-settings.value_model');
+
+        return $this->hasMany($model ?? SettingValue::class);
     }
 
     /**
@@ -151,18 +157,13 @@ class Setting extends Model
 
         $value = $values->first()->value ?? null;
 
-        // Single value type
-        switch ($cast) {
-            case 'bool':
-            case 'boolean':
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            case 'int':
-                return (int)$value;
-            case 'double':
-            case 'float':
-                return (float)$value;
+        // Use filter_var for bools, string 'false' => true with settype
+        if ($cast === 'bool' || $cast === 'boolean') {
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
-        return (string)$value;
+        settype($value, $cast);
+
+        return $value;
     }
 }

@@ -28,6 +28,11 @@ class SettingValue extends Model
         'value',
     ];
 
+    /**
+     * Model uses timestamps (created_at, updated_at)
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
     /**
@@ -37,6 +42,9 @@ class SettingValue extends Model
      */
     public function setting(): BelongsTo
     {
-        return $this->belongsTo(Setting::class);
+        /** @var string|null $model */
+        $model = config('laravel-settings.model');
+
+        return $this->belongsTo($model ?? Setting::class);
     }
 }

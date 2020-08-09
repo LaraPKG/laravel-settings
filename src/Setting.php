@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace LaraPkg\Settings;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use LaraPkg\Settings\Models\Setting as SettingModel;
 
 class Setting
@@ -47,25 +50,62 @@ class Setting
     }
 
     /**
+     * Gets all settings in a group
+     *
+     * @param string $group
+     * @return Collection
+     */
+    public function group(string $group): Collection
+    {
+        return $this->getGroup($group)->get();
+    }
+
+    /**
+     * Gets all settings
+     *
+     * @return Collection
+     */
+    public function all(): Collection
+    {
+        return $this->getGroup()->get();
+    }
+
+    /**
      * Gets a settings model object based on criteria
      *
      * @param string $key
      * @param string|null $group
-     * @return SettingModel|null
+     * @return Model|null
      */
-    protected function getModel(string $key, string $group = null): ?SettingModel
+    protected function getModel(string $key, string $group = null): ?Model
+    {
+        /** @var SettingModel|null $setting */
+        $setting = $this->getGroup($group)
+            ->where('key', $key)
+            ->first();
+
+        return $setting;
+    }
+
+    /**
+     * Gets an Eloquent builder scoped by a particular (optional) group
+     *
+     * @param string|null $group
+     * @return Builder
+     */
+    protected function getGroup(string $group = null): Builder
     {
         /** @var SettingModel $model */
         $model = config('laravel-settings.model') ?: SettingModel::class;
 
-        /** @var SettingModel $setting */
-        $setting = $model::with(['group', 'values']);
+        /** @var Builder $setting */
+        $settings = $model::with(['group', 'values']);
 
         if ($group !== null) {
-            $setting->forGroup($group);
+            $settings->forGroup($group);
         }
 
-        return $setting->where('key', $key)->first();
+        return $setting;
     }
 
     /**
