@@ -162,7 +162,7 @@ class Setting extends Model
             return filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
-        settype($value, $cast);
+        settype($value, $cast ?? 'string');
 
         return $value;
     }
