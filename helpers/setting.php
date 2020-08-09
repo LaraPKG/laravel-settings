@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use LaraPkg\Settings\Setting;
 
-if (!function_exists('setting')) {
+if (! function_exists('setting')) {
     /**
      * Helper to retrieve a setting based on its key
      * Use dot notation to specify the setting group
@@ -23,7 +23,7 @@ if (!function_exists('setting')) {
     }
 }
 
-if (!function_exists('set_setting')) {
+if (! function_exists('set_setting')) {
     /**
      * Helper to set a setting to new value(s)
      *

@@ -48,7 +48,7 @@ class Setting extends Model
      */
     public function group(): BelongsTo
     {
-        /** @var string|null $model */
+        /** @var class-string<Model>|null $model */
         $model = config('laravel-settings.group_model');
 
         return $this->belongsTo($model ?? SettingGroup::class);
@@ -61,7 +61,7 @@ class Setting extends Model
      */
     public function values(): HasMany
     {
-        /** @var string|null $model */
+        /** @var class-string<Model>|null $model */
         $model = config('laravel-settings.value_model');
 
         return $this->hasMany($model ?? SettingValue::class);

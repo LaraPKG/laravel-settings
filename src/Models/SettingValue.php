@@ -42,7 +42,7 @@ class SettingValue extends Model
      */
     public function setting(): BelongsTo
     {
-        /** @var string|null $model */
+        /** @var class-string<Model>|null $model */
         $model = config('laravel-settings.model');
 
         return $this->belongsTo($model ?? Setting::class);

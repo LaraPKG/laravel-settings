@@ -38,7 +38,7 @@ class SettingGroup extends Model
      */
     public function settings(): HasMany
     {
-        /** @var string|null $model */
+        /** @var class-string<Model>|null $model */
         $model = config('laravel-settings.model');
 
         return $this->hasMany($model ?? Setting::class);

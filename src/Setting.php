@@ -22,6 +22,7 @@ class Setting
     {
         [$group, $key] = $this->parseKey($search);
 
+        /** @var SettingModel|null $model */
         $model = $this->getModel($key, $group);
 
         return $model !== null
@@ -42,6 +43,7 @@ class Setting
     {
         [$group, $key] = $this->parseKey($search);
 
+        /** @var SettingModel|null $model */
         $model = $this->getModel($key, $group);
 
         return $model !== null
